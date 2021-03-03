@@ -7,9 +7,7 @@
 const fs = require('fs');
 const PNG = require('pngjs').PNG;
 
-if (process.argv[2] === undefined ||
-    process.argv[2] === null ||
-    process.argv[2] === '') {
+if (!process.argv[2]) {
       console.error('Ошибка: не указано название исходного файла!');
 
       process.exit(1);
