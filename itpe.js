@@ -255,12 +255,6 @@ fs.createReadStream(process.argv[2])
 
         this.bitblt(part, x, y, 64, 64);
 
-        /**
-         * @configurable
-         * Значение опции MouseClickDelay (по умолчанию -1) может быть увеличено при необходимости.
-         * Увеличивать его следует лишь в том случае, если при перемещении курсора периодически
-         * остаётся след.
-         */
         let macro = `SetMouseDelay, -1\nSetBatchLines, -1\nProcess, Priority,, High\n${PAUSE_BUTTON}::Pause\n${CLOSE_BUTTON}::ExitApp\n${START_BUTTON}::\n`;
 
         let macroparts = [];
@@ -275,12 +269,6 @@ fs.createReadStream(process.argv[2])
                 parseInt(color[0].toString() + color[1].toString())
               ] === undefined
             ) {
-              /** @configurable
-               *   Время ожидания между операциями во время выбора цвета (по умолчанию 5) может быть так же
-               * изменено при необходимости, но такой необходимости ещё никогда не возникало.
-               *   Также в последней строке используются две достаточно строгие константы: x и y координаты
-               * левого верхнего угла левой верхней точки на холсте. От неё, собственно, и идёт отсчёт.
-               */
               macroparts[parseInt(color[0].toString() + color[1].toString())] =
                 `Sleep ${SLEEP_TIME}\n` +
                 `MouseClick, left, ${color[0]}, ${color[1]}, 1, D\nMouseClick, left, ${color[0]}, ${color[1]}, 1, U\n` +
@@ -313,12 +301,6 @@ fs.createReadStream(process.argv[2])
           }
         }
 
-        /** @configurable
-         *   Для оптимизации рисования самый используемый цвет считается основным
-         * и первое действие, которое производит макрос - заливает холст им, поэтому необходимы
-         * три координаты (сверху вниз): координата кнопки инструмента заливки, координата любой
-         * точки внутри холста и координата инструмента кисти (или карандаша, не помню что там).
-         */
         macro +=
           macroparts[longestIndex].split("\n", 2)[1] +
           `\nMouseClick, left, ${FILLING_TOOL_X}, ${FILLING_TOOL_Y}, 1, U\n` +
